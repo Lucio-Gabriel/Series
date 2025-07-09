@@ -1,5 +1,6 @@
 <x-layout title="Nova Série">
-    <form action="" method="POST">
+    <form action="/series/save" method="POST">
+        @csrf
         <label
             for="nome"
             class="form-label"
@@ -14,6 +15,8 @@
             name="name"
         />
 
-        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        <button type="submit" class="btn btn-primary mt-2">
+            Salvar
+        </button>
     </form>
 </x-layout>
