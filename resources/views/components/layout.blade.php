@@ -10,10 +10,11 @@
 </head>
 
 <body>
+    <div class="container mt-4">
+        <h1 class="text-4xl font-semibold">{{ $title }}</h1>
 
-    <h1 class="text-4xl font-semibold">{{ $title }}</h1>
-
-    {{ $slot }}
+        {{ $slot }}
+    </div>
 </body>
 
 </html>
