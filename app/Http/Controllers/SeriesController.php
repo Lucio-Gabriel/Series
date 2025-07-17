@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Episode;
+use App\Models\Season;
 use App\Models\Serie;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SeriesController extends Controller
 {
@@ -17,7 +20,7 @@ class SeriesController extends Controller
             ->with('successMessage', $successMessage);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('series.create');
     }
@@ -25,6 +28,27 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request)
     {
         $serie = Serie::create($request->all());
+
+        $seasons = [];
+        for ($i = 1; $i <= $request->seasonsQty; $i++) {
+            $seasons[] = [
+                'series_id' => $serie->id,
+                'number' => $i,
+            ];
+        }
+        Season::insert($seasons);
+
+        $episodes = [];
+        foreach ($serie->seasons as $season) {
+            for ($j = 1; $j <= $request->episodesPerSeason; $j++) {
+                $episodes [] = [
+                    'season_id' => $season->id,
+                    'number' => $j,
+                ];
+            }
+        }
+
+        Episode::insert($episodes);
 
         return redirect(route('series.index'))
             ->with('mensagem.sucesso', "Serie {$serie->name} criada com sucesso.");
