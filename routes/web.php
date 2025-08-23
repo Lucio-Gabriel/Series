@@ -3,13 +3,20 @@
 use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\EpisodesController;
-use App\Models\Episode;
-use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/series');
-});
+})->middleware(Autenticador::class);
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('sign');
+
+Route::get('/register', [RegisterController::class, 'create'])->name('users.create');
+Route::post('/register', [RegisterController::class, 'store'])->name('users.store');
 
 Route::controller(SeriesController::class)->group(function () {
     Route::get('/series', 'index')->name('series.index');
