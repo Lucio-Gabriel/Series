@@ -22,4 +22,11 @@ class LoginController
 
         return redirect()->route('series.index');
     }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return redirect()->route('login');
+    }
 }

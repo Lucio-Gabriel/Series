@@ -13,7 +13,8 @@ Route::get('/', function () {
 })->middleware(Autenticador::class);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('sign');
+Route::post('/login', [LoginController::class, 'store'])->name('signin');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'create'])->name('users.create');
 Route::post('/register', [RegisterController::class, 'store'])->name('users.store');
